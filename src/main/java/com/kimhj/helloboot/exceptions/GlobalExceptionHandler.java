@@ -8,6 +8,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 import com.kimhj.helloboot.response.ApiResponse;
 import com.kimhj.helloboot.response.error.ApiError;
@@ -52,6 +53,8 @@ public class GlobalExceptionHandler {
 			
 		} else if(e instanceof DataAccessException) {
 			return new ApiResponse(ApiErrors.NO_DATA);				// Data is empty.
+		} else if(e instanceof MethodArgumentTypeMismatchException) {
+			return new ApiResponse(ApiErrors.INVALID_PARAMETER);	// Invalid Parameter.
 		}
 		
 		// else
