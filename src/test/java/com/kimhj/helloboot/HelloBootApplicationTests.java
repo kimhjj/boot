@@ -2,6 +2,8 @@ package com.kimhj.helloboot;
 
 import static org.junit.Assert.assertTrue;
 
+import java.lang.reflect.Type;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -15,8 +17,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.web.client.RestTemplate;
 
+import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 import com.kimhj.helloboot.board.vo.Board;
+import com.kimhj.helloboot.response.ApiDataResponse;
 import com.kimhj.helloboot.response.ApiResponse;
 import com.kimhj.helloboot.response.error.ApiError;
 
@@ -88,6 +92,10 @@ public class HelloBootApplicationTests {
 		 */
 		
 		HttpEntity<String> entity = new HttpEntity<>(requestJson, headers);	// body, header
+		
+		// Get 요청 시의 Http Request Message
+		// HttpEntity<String> getEntity = new HttpEntity<>(headers);	// body X
+		
 		ResponseEntity<String> response = rest.exchange(
 												host + "/posts"			// url
 												, HttpMethod.POST		// method
@@ -106,4 +114,43 @@ public class HelloBootApplicationTests {
 		}
 	}
 
+	@Test
+	public void createPost_OK() {
+		Board board = new Board();
+		board.setSubject("Subject Test OK~~~");
+		board.setContent("Content");
+		String requestJson = gson.toJson(board);
+		/*
+		 * {
+		 * 	 "subject": "Subject Test OK~~~",
+		 *   "content": "Content"
+		 * }
+		 */
+		
+		HttpEntity<String> entity = new HttpEntity<>(requestJson, headers);	// body, header
+		ResponseEntity<String> response = rest.exchange(
+												host + "/posts"			// url
+												, HttpMethod.POST		// method
+												, entity				// header, body
+												, String.class);		// respense type
+		String responseBody = response.getBody();
+		System.out.println(responseBody);
+		
+		/*
+		 * Generic이 포함된 타입을 캐스팅하기 위해서는 Type 클래스 활용
+		 * Generic 변환을 위한 Type 생성
+		 */
+		Type boardType = new TypeToken<ApiDataResponse<Board>>()
+								{}.getType();
+		ApiDataResponse<Board> apiResponse = 
+						// gson.fromJson(responseBody, ApiDataResponse.class);	// json -> object
+						gson.fromJson(responseBody, boardType);	// json -> object
+		
+		assertTrue(apiResponse.getStatus().equals("OK"));
+		assertTrue(apiResponse.getError().size() == 0);
+		
+		Board responseBoard = apiResponse.getData();
+		assertTrue(responseBoard.getSubject().equals(board.getSubject()));
+		assertTrue(responseBoard.getContent().equals(board.getContent()));
+	}
 }
