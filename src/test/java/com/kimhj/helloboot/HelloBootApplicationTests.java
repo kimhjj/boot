@@ -110,7 +110,7 @@ public class HelloBootApplicationTests {
 		assertTrue(apiResponse.getError().size() == 1);
 		for(ApiError error : apiResponse.getError()) {
 			assertTrue(error.getCode().equals("1001"));
-			assertTrue(error.getMessage().equals("subject prevent Length (10~100) policy."));
+			assertTrue(error.getMessage().equals("subject prevent Length(10~100) policy."));
 		}
 	}
 

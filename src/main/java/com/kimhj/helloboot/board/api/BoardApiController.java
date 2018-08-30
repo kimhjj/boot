@@ -83,7 +83,7 @@ public class BoardApiController {
 														message = String.format(message, field);
 														//apiError.setMessage(message);
 														//return apiError;
-														return new ApiError(apiError.getCode(), apiError.getMessage());
+														return new ApiError(apiError.getCode(), message);
 													} else {
 														ApiError apiError = ApiErrors.VALIDATION_FAILED;
 														// %s prevent %s policy.
@@ -97,7 +97,7 @@ public class BoardApiController {
 																				, validationType +"("+defaultMessage+")");
 														//apiError.setMessage(message);
 														//return apiError;
-														return new ApiError(apiError.getCode(), apiError.getMessage());
+														return new ApiError(apiError.getCode(), message);
 													}
 												})
 												.collect(Collectors.toList());
