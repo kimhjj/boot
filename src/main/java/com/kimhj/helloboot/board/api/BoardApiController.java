@@ -1,7 +1,6 @@
 package com.kimhj.helloboot.board.api;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
@@ -17,9 +16,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.kimhj.helloboot.board.service.BoardService;
 import com.kimhj.helloboot.board.vo.Board;
+import com.kimhj.helloboot.exceptions.ApiException;
 import com.kimhj.helloboot.response.ApiDataResponse;
 import com.kimhj.helloboot.response.ApiResponse;
-import com.kimhj.helloboot.response.error.ApiError;
 import com.kimhj.helloboot.response.error.ApiErrors;
 
 @RestController
@@ -57,52 +56,7 @@ public class BoardApiController {
 		// ★ 브라우저에서는 @Valid @ModelAttribute 모델어트리뷰트가 꼭 있어야 한다. restapi에서는 빼야함.
 		
 		if(errors.hasErrors()) {
-			// for 없이 작성!
-			List<ApiError> errorMessages = errors.getFieldErrors()
-												.stream()
-												.map(error -> {
-													/**
-													 * if (Annotation Type Check == NotEmpty) {
-													 *  ApiError apiError = ApiErrors.MISSING_REQUIRE_FIELD;
-													 *  String name = 해당 변수명;
-													 * }
-													 */
-													// Not Empty
-													// Length
-													// Range
-													// RegExp
-													String validationType = error.getCode();
-													if(validationType.equals("NotEmpty")) {
-														ApiError apiError = ApiErrors.MISSING_REQUIRE_ERROR;
-														// %s is mandatory field.
-														String message = apiError.getMessage();
-														// subject, ...
-														String field = error.getField();
-														
-														// subject is mandatory field.
-														message = String.format(message, field);
-														//apiError.setMessage(message);
-														//return apiError;
-														return new ApiError(apiError.getCode(), message);
-													} else {
-														ApiError apiError = ApiErrors.VALIDATION_FAILED;
-														// %s prevent %s policy.
-														String message = apiError.getMessage();
-														String field = error.getField();
-														String defaultMessage = error.getDefaultMessage();
-														
-														// subject prevent Length (10~100) policy.
-														message = String.format(message
-																				, field
-																				, validationType +"("+defaultMessage+")");
-														//apiError.setMessage(message);
-														//return apiError;
-														return new ApiError(apiError.getCode(), message);
-													}
-												})
-												.collect(Collectors.toList());
-			// TODO : 8/30 수정
-			return new ApiResponse(errorMessages);
+			throw new ApiException(errors.getFieldErrors());
 		}
 		
 		/*
