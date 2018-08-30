@@ -1,0 +1,112 @@
+{
+	"info": {
+		"_postman_id": "4a1bbba5-d382-451b-97e9-680a9ed410cd",
+		"name": "Member",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create Post",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"name\":\"kimhj\", \"email\":\"aa@test.com\",\"password\":\"123\"}"
+				},
+				"url": {
+					"raw": "http://localhost/members",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"members"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Select Get",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"name\":\"kimhj\", \"email\":\"aa@test.com\",\"password\":\"123\"}"
+				},
+				"url": {
+					"raw": "http://localhost/members/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"members",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Delete",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost/members/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"members",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Put",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"name\":\"kimhj\", \"email\":\"aa@test.com\",\"password\":\"12345\"}"
+				},
+				"url": {
+					"raw": "http://localhost/members/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"members",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
