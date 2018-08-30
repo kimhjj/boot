@@ -8,7 +8,7 @@ public class Board {
 	private long postId;
 	
 	@NotEmpty(message="Subject is mandatory field.")	// not empty가 위배 되었을 때, 나타날 메시지 (blank and null)
-	@Length(min=10, max=100, message="Subject prevent length policy (10~100)")
+	@Length(min=10, max=100, message="10~100")
 	private String subject;
 	
 	@NotEmpty(message="Content is mandatory field.")
