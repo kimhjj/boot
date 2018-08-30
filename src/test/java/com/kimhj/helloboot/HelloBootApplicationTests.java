@@ -73,5 +73,37 @@ public class HelloBootApplicationTests {
 			assertTrue(error.getCode().equals("1000"));
 		}
 	}
+	
+	@Test
+	public void createPost_Failed_Length_Suject() {
+		Board board = new Board();
+		board.setSubject("abc");
+		board.setContent("Content");
+		String requestJson = gson.toJson(board);
+		/*
+		 * {
+		 * 	 "subject": "abc",
+		 *   "content": "Content"
+		 * }
+		 */
+		
+		HttpEntity<String> entity = new HttpEntity<>(requestJson, headers);	// body, header
+		ResponseEntity<String> response = rest.exchange(
+												host + "/posts"			// url
+												, HttpMethod.POST		// method
+												, entity				// header, body
+												, String.class);		// respense type
+		String responseBody = response.getBody();
+		System.out.println(responseBody);
+		
+		ApiResponse apiResponse = gson.fromJson(responseBody, ApiResponse.class);	// json -> object
+		
+		assertTrue(apiResponse.getStatus().equals("Failed"));
+		assertTrue(apiResponse.getError().size() == 1);
+		for(ApiError error : apiResponse.getError()) {
+			assertTrue(error.getCode().equals("1001"));
+			assertTrue(error.getMessage().equals("subject prevent Length (10~100) policy."));
+		}
+	}
 
 }
