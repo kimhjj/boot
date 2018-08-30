@@ -23,11 +23,7 @@ public class BoardServiceImpl implements BoardService {
 
 	@Override
 	public Board findOneBoard(long boardId) {
-		try {
-			return this.boardDao.selectOneBoard(boardId);
-		} catch (Exception e) {
-			return null;
-		}
+		return this.boardDao.selectOneBoard(boardId);
 	}
 
 	@Override

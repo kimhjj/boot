@@ -3,6 +3,7 @@ package com.kimhj.helloboot.exceptions;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.dao.DataAccessException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -48,9 +49,13 @@ public class GlobalExceptionHandler {
 									})
 									.collect(Collectors.toList());
 			return new ApiResponse(errorMessages);
+			
+		} else if(e instanceof DataAccessException) {
+			return new ApiResponse(ApiErrors.NO_DATA);				// Data is empty.
 		}
 		
-		return null;
+		// else
+		return new ApiResponse(ApiErrors.INTERNAL_SERVER_ERROR);	// Unknown Error.
 	}
 	
 }
