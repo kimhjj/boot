@@ -1,17 +1,24 @@
 package com.kimhj.helloboot;
 
+import static org.junit.Assert.assertTrue;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.web.client.RestTemplate;
 
 import com.google.gson.Gson;
+import com.kimhj.helloboot.board.vo.Board;
+import com.kimhj.helloboot.response.ApiResponse;
+import com.kimhj.helloboot.response.error.ApiError;
 
 @RunWith(SpringRunner.class)
 // @SpringBootTest 서버를 띄울때 필요한 어노테이션
@@ -21,9 +28,8 @@ public class HelloBootApplicationTests {
 	@Value("${local.server.port}")
 	private int port;
 	
-	private String host = "http://localhost:" + port;
+	private String host;
 	
-	@Autowired
 	private RestTemplate rest;
 	private HttpHeaders headers;
 	
@@ -31,13 +37,41 @@ public class HelloBootApplicationTests {
 	
 	@Before
 	public void setup() {
+		host = "http://localhost:" + port;
+		
+		rest = new RestTemplate();
 		gson = new Gson();
 		headers = new HttpHeaders();
 		headers.add("Content-Type", "application/json");
 	}
 			
 	@Test
-	public void contextLoads() {
+	public void createPost_Failed_NotEmpty_Both() {
+		Board board = new Board();
+		String requestJson = gson.toJson(board);
+		/*
+		 * {
+		 * 	 "subject": null,
+		 *   "content": null
+		 * }
+		 */
+		
+		HttpEntity<String> entity = new HttpEntity<>(requestJson, headers);	// body, header
+		ResponseEntity<String> response = rest.exchange(
+												host + "/posts"			// url
+												, HttpMethod.POST		// method
+												, entity				// header, body
+												, String.class);		// respense type
+		String responseBody = response.getBody();
+		System.out.println(responseBody);
+		
+		ApiResponse apiResponse = gson.fromJson(responseBody, ApiResponse.class);	// responseBody를 ApiResponse로 변환
+		
+		assertTrue(apiResponse.getStatus().equals("Failed"));
+		assertTrue(apiResponse.getError().size() == 2);
+		for(ApiError error : apiResponse.getError()) {
+			assertTrue(error.getCode().equals("1000"));
+		}
 	}
 
 }
