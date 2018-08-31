@@ -1,6 +1,6 @@
-package com.kimhj.helloboot.board.dao;
+package com.kimhj.helloboot.member.dao;
 
-import com.kimhj.helloboot.board.vo.Member;
+import com.kimhj.helloboot.member.vo.Member;
 
 public interface MemberDao {
 	public Member insertNewMember(Member member);

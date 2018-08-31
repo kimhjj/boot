@@ -1,6 +1,6 @@
-package com.kimhj.helloboot.board.service;
+package com.kimhj.helloboot.member.service;
 
-import com.kimhj.helloboot.board.vo.Member;
+import com.kimhj.helloboot.member.vo.Member;
 
 public interface MemberService {
 	public Member insertNewMember(Member member);

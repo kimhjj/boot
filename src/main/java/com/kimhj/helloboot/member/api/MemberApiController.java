@@ -1,4 +1,4 @@
-package com.kimhj.helloboot.board.api;
+package com.kimhj.helloboot.member.api;
 
 import javax.validation.Valid;
 
@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.kimhj.helloboot.board.service.MemberService;
-import com.kimhj.helloboot.board.vo.Member;
 import com.kimhj.helloboot.exceptions.ApiException;
+import com.kimhj.helloboot.member.service.MemberService;
+import com.kimhj.helloboot.member.vo.Member;
 import com.kimhj.helloboot.response.ApiDataResponse;
 import com.kimhj.helloboot.response.ApiResponse;
 import com.kimhj.helloboot.response.error.ApiErrors;

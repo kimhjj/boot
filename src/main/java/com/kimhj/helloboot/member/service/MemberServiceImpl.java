@@ -1,10 +1,10 @@
-package com.kimhj.helloboot.board.service;
+package com.kimhj.helloboot.member.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.kimhj.helloboot.board.dao.MemberDao;
-import com.kimhj.helloboot.board.vo.Member;
+import com.kimhj.helloboot.member.dao.MemberDao;
+import com.kimhj.helloboot.member.vo.Member;
 
 @Service
 public class MemberServiceImpl implements MemberService{

@@ -1,11 +1,11 @@
-package com.kimhj.helloboot.board.dao;
+package com.kimhj.helloboot.member.dao;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.stereotype.Repository;
 
-import com.kimhj.helloboot.board.vo.Member;
+import com.kimhj.helloboot.member.vo.Member;
 
 @Repository
 public class MemberDaoInMemory implements MemberDao {

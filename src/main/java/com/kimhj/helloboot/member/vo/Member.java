@@ -1,4 +1,4 @@
-package com.kimhj.helloboot.board.vo;
+package com.kimhj.helloboot.member.vo;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
