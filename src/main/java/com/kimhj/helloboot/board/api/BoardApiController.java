@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.google.gson.Gson;
 import com.kimhj.helloboot.board.service.BoardService;
 import com.kimhj.helloboot.board.vo.Board;
 import com.kimhj.helloboot.exceptions.ApiException;
@@ -71,6 +72,19 @@ public class BoardApiController {
 		Board createdBoard = this.boardService.createNewBoard(board);
 		
 		ApiDataResponse<Board> result = new ApiDataResponse<>(createdBoard);
+		
+		// json으로 변경하여 history appender에 추가
+		Gson gson = new Gson();
+		HistoryAppender appender = new HistoryAppender();
+		appender.append(
+					"POST /posts"
+					, gson.toJson(board)
+					, gson.toJson(result));
+		// @@ ★ 요청을 보내고, DB insert 확인
+		// http://localhost:9090/console
+		// test2 DB
+		// SELECT * FROM HISTORY;
+		
 		return result;
 	}
 	

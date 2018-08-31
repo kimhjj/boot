@@ -44,7 +44,7 @@ public class HelloBootApplicationTests {
 	// 딱 한번 사용
 	@Before
 	public static void settingAccessToken() {
-		accessToken = "Bearer 2d19641c-8c1f-461b-bce4-d960e6165b05";
+		accessToken = "Bearer 22201e97-98c4-4e9d-b0b0-bfc90c0da7d0";
 	}
 	
 	@Before
