@@ -29,6 +29,8 @@ import com.kimhj.helloboot.response.error.ApiError;
 @SpringBootTest(webEnvironment=WebEnvironment.RANDOM_PORT)
 public class HelloBootApplicationTests {
 
+	private static String accessToken;
+	
 	@Value("${local.server.port}")
 	private int port;
 	
@@ -39,6 +41,12 @@ public class HelloBootApplicationTests {
 	
 	private Gson gson;
 	
+	// 딱 한번 사용
+	@Before
+	public static void settingAccessToken() {
+		accessToken = "Bearer 2d19641c-8c1f-461b-bce4-d960e6165b05";
+	}
+	
 	@Before
 	public void setup() {
 		host = "http://localhost:" + port;
@@ -47,6 +55,7 @@ public class HelloBootApplicationTests {
 		gson = new Gson();
 		headers = new HttpHeaders();
 		headers.add("Content-Type", "application/json");
+		headers.add("Authorization", accessToken);
 	}
 			
 	@Test
